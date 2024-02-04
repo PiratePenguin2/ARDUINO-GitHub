@@ -31,21 +31,16 @@ void TaskAnalogRead(void *pvParameters)
   
   myServo.attach(servoPin); // Attach the servo to the corresponding pin
 
-  int lastPos = -1;
-
   for (;;)
   {
     // read the input on analog pin 0:
-    int sensorValue = (int)(analogRead(A7) / 10) * 10;  //Rounded to reduce potentiometer jitter
+    int sensorValue = (int)((analogRead(A7) + 5) / 10) * 10;  //Rounded to reduce potentiometer jitter
+    Serial.println(sensorValue);
   
     // Map the potentiometer value to the servo range (adjust as needed)
     int servoPosition = map(sensorValue, 0+200, 1023-200, 0, 180);
-  
-    if (lastPos != sensorValue)
-    {
+
       myServo.write(servoPosition);// Set the servo position based on the mapped value
-      lastPos = sensorValue;
-    }
        
     vTaskDelay(100 / portTICK_PERIOD_MS); // one tick delay (15ms) in between reads for stability
   }
