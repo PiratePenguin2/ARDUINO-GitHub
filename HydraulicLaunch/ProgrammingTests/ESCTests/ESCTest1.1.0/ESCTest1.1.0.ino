@@ -70,7 +70,7 @@ void loop() {
     if (buttonState == HIGH)
     {
       // turn ESC on:
-      motor.newTarget(200);
+      motor.newTarget(150);
       
       // Release the semaphore after setting the target speed
       xSemaphoreGive(motorSemaphore);
