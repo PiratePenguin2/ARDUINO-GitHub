@@ -5,22 +5,22 @@ Led::Led() {
     isOn = false;
 }
 
-void Led::turnOn() {
+void Led::turnOn(int ledPin) {
     isOn = true;
     // Assuming you are using an LED connected to a pin, replace 13 with your actual pin
-    digitalWrite(13, HIGH);
+    digitalWrite(ledPin, HIGH);
 }
 
-void Led::turnOff() {
+void Led::turnOff(int ledPin) {
     isOn = false;
     // Assuming you are using an LED connected to a pin, replace 13 with your actual pin
-    digitalWrite(13, LOW);
+    digitalWrite(ledPin, LOW);
 }
 
-void Led::blink(int onTime, int offTime) {
+void Led::blink(int ledPin, int onTime, int offTime) {
     // Assuming you are using an LED connected to a pin, replace 13 with your actual pin
-    digitalWrite(13, HIGH);
+    digitalWrite(ledPin, HIGH);
     delay(onTime);
-    digitalWrite(13, LOW);
+    digitalWrite(ledPin, LOW);
     delay(offTime);
 }

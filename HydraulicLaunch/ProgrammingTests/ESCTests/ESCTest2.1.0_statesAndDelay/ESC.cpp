@@ -5,8 +5,8 @@ Esc::Esc() {
     currentSpeed = 0;
 }
 
-void Esc::setSpeed(int speed) {
+void Esc::setSpeed(int speed, int escPin) {
     // Assuming you have a function to control ESC speed, replace the following line
     // with your actual implementation
-    analogWrite(9, speed);  // Assuming ESC control pin is connected to pin 9
+    analogWrite(escPin, speed);  // Assuming ESC control pin is connected to pin 9
 }

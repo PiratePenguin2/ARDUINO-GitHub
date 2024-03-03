@@ -5,7 +5,7 @@
 class Launch {
 public:
     Launch();
-    void startSequence();
+    void startSequence(int escPin, int ledPin);
 
 private:
     void printState(const char* state, int duration);

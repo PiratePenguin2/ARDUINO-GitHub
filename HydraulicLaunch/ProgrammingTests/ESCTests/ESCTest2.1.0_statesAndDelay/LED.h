@@ -3,9 +3,9 @@
 class Led {
 public:
     Led();
-    void turnOn();
-    void turnOff();
-    void blink(int onTime, int offTime);
+    void turnOn(int ledPin);
+    void turnOff(int ledPin);
+    void blink(int ledPin, int onTime, int offTime);
 
 private:
     bool isOn;

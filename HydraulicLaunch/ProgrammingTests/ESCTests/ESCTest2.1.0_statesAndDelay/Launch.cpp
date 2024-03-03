@@ -23,7 +23,7 @@ void Launch::setState(const char* state, int duration) {
     delay(duration);
 }
 
-void Launch::startSequence() {
+void Launch::startSequence(int escPin, int ledPin) {
     // Initial state
     setState("IDLE", 0);
 
@@ -32,34 +32,35 @@ void Launch::startSequence() {
 
     // Set to "LAUNCHREADY" before launch
     setState("LAUNCHREADY", 0);
-    led.blink(blinkRate1, blinkRate1);
+    led.blink(ledPin, blinkRate1, blinkRate1);
 
     // PRESTAGING
     setState("PRESTAGING", 100);
     // PRESTAGED
     setState("PRESTAGED", 0);
-    led.blink(blinkRate2, blinkRate2);
+    led.blink(ledPin, blinkRate2, blinkRate2);
 
     // STAGING
     setState("STAGING", 1000);
 
     // STAGED
     setState("STAGED", 0);
-    led.turnOn();
+    led.turnOn(ledPin);
 
     // LAUNCHING
     setState("LAUNCHING", 150);
-    esc.setSpeed(200);
-    led.blink(rapidBlinkRate, rapidBlinkRate);
+    esc.setSpeed(200, escPin);
+    led.blink(ledPin, rapidBlinkRate, rapidBlinkRate);
 
     // DECELERATING
     setState("DECELERATING", 0);
-    esc.setSpeed(-200);
-    led.turnOn();
+    esc.setSpeed(-200, escPin);
+    led.turnOn(ledPin);
 
     // TRAINASCEND
     setState("TRAINASCEND", 2000);
-    led.blink(400, 400);
+    esc.setSpeed(0, escPin);
+    led.blink(ledPin, 400, 400);
     // Add comment for raising brakes
 
     // STARTRESET
