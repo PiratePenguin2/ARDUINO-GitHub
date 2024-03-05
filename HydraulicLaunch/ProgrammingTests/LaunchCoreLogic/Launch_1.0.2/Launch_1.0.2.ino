@@ -4,6 +4,7 @@ Util::Button mainButton(2); // Button attached to pin 2
 Util::Led mainLamp(3);        // LED attached to pin 3
 
 void setup() {
+  
 }
 
 void loop() {
