@@ -69,6 +69,7 @@ bool PT_Util::Button::isEnabled() {
   switch (mode) {
     case PUSH:
       enabled = isPushed;
+      break;
     case TAP:
       if (isPushed && buttonDelay.timerFinished()) {
         enabled = true;
