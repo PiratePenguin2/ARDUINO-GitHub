@@ -1,4 +1,4 @@
-// Motor.h
+// Motors.h
 #pragma once
 
 class Motor {

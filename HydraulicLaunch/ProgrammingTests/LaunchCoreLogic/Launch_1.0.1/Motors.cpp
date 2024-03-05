@@ -1,13 +1,17 @@
-// Motor.cpp
-#include "Motor.h"
+// Motors.cpp
+#include "Motors.h"
 #include <Arduino.h>
 
-Motor::Motor(MotorType type, int p) {
+Motors::Motor(MotorType type, int p) {
     motorType = type;
     pin = p;
     pos = 0;
     speed = 0;
     state = 0;  // Initialize state to some default value
+}
+
+Motors::Brakes[]() {
+  
 }
 
 void Motor::setSpeed(int spd) {
