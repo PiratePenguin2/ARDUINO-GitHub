@@ -1,7 +1,7 @@
 #include "PT_Util.h"
 #include <Arduino.h>
 
-PT_Util::Button powerButton(2);
+PT_Util::Button powerButton(2, LATCH);
 PT_Util::Led statusLamp(3);
 
 void setup() {
@@ -9,7 +9,7 @@ void setup() {
 }
 
 void loop() {
-  if (powerButton.isPressed()) {
+  if (powerButton.isEnabled()) {  //The button should be latched
     statusLamp.turnOn();
   } else {
     statusLamp.turnOff();
