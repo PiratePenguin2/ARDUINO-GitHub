@@ -10,8 +10,8 @@ public:
     void setTimer(int mSec);
     unsigned long getStartTime();
     unsigned long getEndTime();
-    int getElapsedTime();
-    int getTimeLeft();
+    unsigned long getElapsedTime();
+    unsigned long getTimeLeft();
     bool timerFinished();
   private:
     int duration;

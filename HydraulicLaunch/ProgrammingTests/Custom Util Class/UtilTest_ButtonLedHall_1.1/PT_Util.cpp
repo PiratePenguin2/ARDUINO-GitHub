@@ -19,24 +19,35 @@ unsigned long PT_Util::Timer::getStartTime() {
 }
 
 unsigned long PT_Util::Timer::getEndTime() {
-  return startTime + duration;  //
+  return startTime + duration;
 }
 
-int PT_Util::Timer::getElapsedTime() {
-  return millis() - startTime;
+unsigned long PT_Util::Timer::getElapsedTime() {
+  unsigned long currentTime = millis();
+  if (currentTime >= startTime) {
+    return currentTime - startTime;
+  } else {
+    // Handle rollover
+  return (4294967295UL - 1 - startTime) + currentTime + 1;  }
 }
 
-int PT_Util::Timer::getTimeLeft() {
-  int timeLeft = getEndTime() - getElapsedTime();
-  if (timeLeft <= 0) {
+unsigned long PT_Util::Timer::getTimeLeft() {
+  unsigned long elapsedTime = getElapsedTime();
+  if (elapsedTime >= duration) {
     return 0; // Timer finished
   } else {
-    return timeLeft;
+    return duration - elapsedTime;
   }
 }
 
 bool PT_Util::Timer::timerFinished() {
-  return (getEndTime() - getElapsedTime() <= 0);
+  unsigned long currentTime = millis();
+  if (currentTime >= startTime) {
+    return (currentTime - startTime >= duration);
+  } else {
+    // Handle rollover
+    return (4294967295UL - startTime + currentTime >= duration);
+  }
 }
 
 // PT_Util::Stopwatch implementation
