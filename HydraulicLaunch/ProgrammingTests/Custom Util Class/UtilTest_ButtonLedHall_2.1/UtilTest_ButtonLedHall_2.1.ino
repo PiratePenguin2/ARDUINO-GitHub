@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "PT_Util.h"
 
-Button powerButton(2, LATCH);
+Button powerButton(2, Button::LATCH);
 Led statusLamp(3);
 //Timer lampBlink(1000);
 

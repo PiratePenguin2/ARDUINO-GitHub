@@ -8,7 +8,7 @@ Button::Button(int pin) : buttonPin(pin) {
   mode = PUSH;  // Set default mode
 }
 
-Button::Button(int pin, int mode) : buttonPin(pin), mode(mode) {
+Button::Button(int pin, ButtonMode m) : buttonPin(pin), mode(m) {
   pinMode(buttonPin, INPUT);
 }
 
