@@ -1,0 +1,14 @@
+class Timer {
+  public:
+    Timer();
+    Timer(int mSec);
+    void setTimer(int mSec);
+    unsigned long getStartTime();
+    unsigned long getEndTime();
+    unsigned long getElapsedTime();
+    unsigned long getTimeLeft();
+    bool timerFinished();
+  private:
+    int duration;
+    unsigned long startTime;
+  };
