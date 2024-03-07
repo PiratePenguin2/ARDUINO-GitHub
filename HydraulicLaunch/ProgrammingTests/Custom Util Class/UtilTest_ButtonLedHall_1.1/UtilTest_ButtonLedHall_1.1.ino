@@ -3,7 +3,7 @@
 
 PT_Util::Button powerButton(2);
 PT_Util::Led statusLamp(3);
-PT_Util::Timer lampBlink(1000);
+//PT_Util::Timer lampBlink(1000);
 
 int tps = 21;
 
@@ -15,11 +15,21 @@ void setup() {
 
 void loop() {
 
+  //powerButton.controlLed(statusLamp);
+  powerButton.isEnabled() ? statusLamp.turnOn() : statusLamp.turnOff();
+  
+  statusLamp.update();
+  delay(1000 / tps);
+}
+
+
+
+
+  /*
   //statusLamp.setState(BLINK, 250, 250);
 
   if (lampBlink.timerFinished())
   {
-    Serial.println("works?");
     if (statusLamp.getState() == OFF)
     {
       statusLamp.setState(BLINK, 250);
@@ -34,9 +44,4 @@ void loop() {
     {
       statusLamp.turnOn();
     }
-  
-
-  }
-  statusLamp.update();
-  delay(1000 / tps);
-}
+  }*/
