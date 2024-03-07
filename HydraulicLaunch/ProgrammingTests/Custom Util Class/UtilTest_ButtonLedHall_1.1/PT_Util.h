@@ -50,15 +50,25 @@ public:
   };
 
   class Led {
+    #define ON 0
+    #define OFF 1
+    #define FLIP 2
+    #define BLINK 3
   public:
     Led(int pin);
+    void update();
+    void setState(int state);
+    void setState(int state, int onTime);
+    void setState(int state, int onTime, int offTime);
     void turnOn();
     void turnOff();
-    void blink(int onTime, int offTime);
-    bool isON(); // New function
+    bool getState(); // New function
   private:
     bool isOn;
     int ledPin;
+    int onTime;
+    int offTime;
+    int state;
   };
 
   class HallEffectSensor {

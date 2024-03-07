@@ -28,7 +28,8 @@ unsigned long PT_Util::Timer::getElapsedTime() {
     return currentTime - startTime;
   } else {
     // Handle rollover
-  return (4294967295UL - 1 - startTime) + currentTime + 1;  }
+    return (4294967295UL - 1 - startTime) + currentTime + 1;
+  }
 }
 
 unsigned long PT_Util::Timer::getTimeLeft() {
@@ -108,26 +109,66 @@ PT_Util::Led::Led(int pin) : ledPin(pin) {
   pinMode(ledPin, OUTPUT);
 }
 
+void PT_Util::Led::update() {
+  switch (state) {
+    case ON:
+      isOn = true;
+      digitalWrite(ledPin, HIGH);
+      break;
+    case OFF:
+      isOn = false;
+      digitalWrite(ledPin, LOW);
+      break;
+    case FLIP:
+      isOn = !isOn;
+      digitalWrite(ledPin, isOn ? HIGH : LOW);
+      if (isOn)
+        state = ON;
+      else
+        state = OFF;
+      break;
+    case BLINK:
+      isOn = true;
+      digitalWrite(ledPin, isOn ? HIGH : LOW);
+      break;
+    default:
+      Serial.println("ERROR: Unknown LED State: " + state);
+      break;
+  }
+}
+
+void PT_Util::Led::setState(int newState) {
+  state = newState;
+  update();
+}
+
+void PT_Util::Led::setState(int newState, int newOnTime) {
+  state = newState;
+  onTime = newOnTime;
+  update();
+}
+
+void PT_Util::Led::setState(int newState, int newOnTime, int newOffTime) {
+  state = newState;
+  onTime = newOnTime;
+  offTime = newOffTime;
+  update();
+}
+
 void PT_Util::Led::turnOn() {
-  isOn = true;
-  digitalWrite(ledPin, HIGH);
+  state = ON;
+  update();
 }
 
 void PT_Util::Led::turnOff() {
-  isOn = false;
-  digitalWrite(ledPin, LOW);
+  state = OFF;
+  update();
 }
 
-void PT_Util::Led::blink(int onTime, int offTime) {
-  digitalWrite(ledPin, HIGH);
-  delay(onTime);
-  digitalWrite(ledPin, LOW);
-  delay(offTime);
-}
-
-bool PT_Util::Led::isON() {
+bool PT_Util::Led::getState() {
   return isOn;
 }
+
 
 // PT_Util::HallEffectSensor implementation
 PT_Util::HallEffectSensor::HallEffectSensor(int pin) : sensorPin(pin) {

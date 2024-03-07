@@ -7,33 +7,20 @@ PT_Util::Timer lampBlink(1000);
 
 int tps = 4;
 
-bool ledState = true;
-
 void setup() {
   Serial.begin(9600);
 }
 
 void loop() {
-  /*if (powerButton.isEnabled()) {  //The button should be latched
-    Serial.println("ON");
-    statusLamp.turnOn();
-  } else {
-    Serial.println("OFF");
-    statusLamp.turnOff();
-  }*/
   Serial.println(lampBlink.getElapsedTime());
   
   if(lampBlink.timerFinished())
   {
-    Serial.println("flip");
-    ledState = !ledState;
+    Serial.print("flip - Elapsed Time: ");
+    Serial.println(lampBlink.getElapsedTime());
+    statusLamp.setState(FLIP);
     lampBlink.setTimer(1000);
   }
-
-  if (ledState) {
-    statusLamp.turnOn();
-  } else {
-    statusLamp.turnOff();
-  }
+  
   delay(1000 / tps);
 }
