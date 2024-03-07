@@ -128,8 +128,23 @@ void PT_Util::Led::update() {
         state = OFF;
       break;
     case BLINK:
-      isOn = true;
-      digitalWrite(ledPin, isOn ? HIGH : LOW);
+      if (blinkTimer.timerFinished())
+      {
+        Serial.println(blinkTimer.getElapsedTime());
+        if (!isOn)
+        {
+          isOn = true;
+          digitalWrite(ledPin, HIGH);
+          blinkTimer.setTimer(onTime);
+        }
+        else
+        {
+          isOn = false;
+          digitalWrite(ledPin, LOW);
+          blinkTimer.setTimer(offTime);
+          Serial.println();
+        }
+      }
       break;
     default:
       Serial.println("ERROR: Unknown LED State: " + state);
@@ -139,20 +154,21 @@ void PT_Util::Led::update() {
 
 void PT_Util::Led::setState(int newState) {
   state = newState;
-  update();
+  //update();
 }
 
 void PT_Util::Led::setState(int newState, int newOnTime) {
   state = newState;
   onTime = newOnTime;
-  update();
+  offTime = newOnTime;
+  //update();
 }
 
 void PT_Util::Led::setState(int newState, int newOnTime, int newOffTime) {
   state = newState;
   onTime = newOnTime;
   offTime = newOffTime;
-  update();
+  //update();
 }
 
 void PT_Util::Led::turnOn() {

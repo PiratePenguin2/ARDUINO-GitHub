@@ -69,6 +69,7 @@ public:
     int onTime;
     int offTime;
     int state;
+    PT_Util::Timer blinkTimer; // Declare blinkTimer as a member variable
   };
 
   class HallEffectSensor {

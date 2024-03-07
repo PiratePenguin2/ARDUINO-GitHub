@@ -3,24 +3,37 @@
 
 PT_Util::Button powerButton(2);
 PT_Util::Led statusLamp(3);
-PT_Util::Timer lampBlink(1000);
+//PT_Util::Timer lampBlink(1000);
 
-int tps = 4;
+int tps = 41;
+
+//unsigned long tempElapsedTime;
 
 void setup() {
   Serial.begin(9600);
 }
 
 void loop() {
-  Serial.println(lampBlink.getElapsedTime());
+
+  statusLamp.setState(BLINK, 250, 250);
   
-  if(lampBlink.timerFinished())
+  /*if(lampBlink.timerFinished())
   {
-    Serial.print("flip - Elapsed Time: ");
-    Serial.println(lampBlink.getElapsedTime());
-    statusLamp.setState(FLIP);
-    lampBlink.setTimer(1000);
-  }
-  
+    if (statusLamp.getState() == OFF)
+    {
+      statusLamp.setState(BLINK, 250);
+      lampBlink.setTimer(5000);
+    }
+    else if (statusLamp.getState() == BLINK)
+    {
+      statusLamp.turnOff();
+      lampBlink.setTimer(5000);
+    }
+    else
+    {
+      statusLamp.turnOn();
+    }
+  }*/
+  statusLamp.update();
   delay(1000 / tps);
 }
