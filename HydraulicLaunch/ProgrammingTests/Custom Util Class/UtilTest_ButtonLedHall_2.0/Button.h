@@ -1,13 +1,18 @@
-class Button {
-    #define PUSH          000
-    #define TAP           001
-    #define TAP_RELEASE   002
-    #define LATCH         003
+// Button.h
+#ifndef BUTTON_H
+#define BUTTON_H
+#include "Timer.h"
 
-    /*#define NO              100
-    #define NORMALLY_OPEN   101
-    #define NC              102
-    #define NORMALLY_CLOSED 103*/
+class Button {
+  #define PUSH          000
+  #define TAP           001
+  #define TAP_RELEASE   002
+  #define LATCH         003
+
+  /*#define NO              100
+  #define NORMALLY_OPEN   101
+  #define NC              102
+  #define NORMALLY_CLOSED 103*/
   public:
     Button(int pin);
     Button(int pin, int mode);
@@ -21,5 +26,7 @@ class Button {
     int buttonLatchDelay = 500;
     int mode;
     bool lastPushed = true;
-    PT_Util::Timer buttonDelay; // Declare buttonLatch as a member variable
-  };
+    Timer buttonDelay; // Declare buttonLatch as a member variable
+};
+  
+#endif // BUTTON_H

@@ -1,3 +1,8 @@
+// Led.h
+#ifndef LED_H
+#define LED_H
+#include "Timer.h"
+
 class Led {
     #define ON 0
     #define OFF 1
@@ -20,5 +25,7 @@ class Led {
     int onTime;
     int offTime;
     int state;
-    PT_Util::Timer blinkTimer; // Declare blinkTimer as a member variable
-  };
+    Timer blinkTimer; // Declare blinkTimer as a member variable
+};
+  
+#endif // LED_H

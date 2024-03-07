@@ -1,25 +1,28 @@
-  // PT_Util::Timer implementation
-PT_Util::Timer::Timer() {
+// PT_Util::Timer implementation
+#include <Arduino.h>
+#include "Timer.h"
+
+Timer::Timer() {
 }
 
-PT_Util::Timer::Timer(int mSec) {
+Timer::Timer(int mSec) {
   setTimer(mSec);
 }
 
-void PT_Util::Timer::setTimer(int mSec) {
+void Timer::setTimer(int mSec) {
   duration = mSec;
   startTime = millis();
 }
 
-unsigned long PT_Util::Timer::getStartTime() {
+unsigned long Timer::getStartTime() {
   return startTime;
 }
 
-unsigned long PT_Util::Timer::getEndTime() {
+unsigned long Timer::getEndTime() {
   return startTime + duration;
 }
 
-unsigned long PT_Util::Timer::getElapsedTime() {
+unsigned long Timer::getElapsedTime() {
   unsigned long currentTime = millis();
   if (currentTime >= startTime) {
     return currentTime - startTime;
@@ -29,7 +32,7 @@ unsigned long PT_Util::Timer::getElapsedTime() {
   }
 }
 
-unsigned long PT_Util::Timer::getTimeLeft() {
+unsigned long Timer::getTimeLeft() {
   unsigned long elapsedTime = getElapsedTime();
   if (elapsedTime >= duration) {
     return 0; // Timer finished
@@ -38,7 +41,7 @@ unsigned long PT_Util::Timer::getTimeLeft() {
   }
 }
 
-bool PT_Util::Timer::timerFinished() {
+bool Timer::timerFinished() {
   unsigned long currentTime = millis();
   if (currentTime >= startTime) {
     return (currentTime - startTime >= duration);

@@ -1,10 +1,13 @@
 // PT_Util::Stopwatch implementation
-PT_Util::Stopwatch::Stopwatch() : startTime(0) {}
+#include <Arduino.h>
+#include "Stopwatch.h"
 
-void PT_Util::Stopwatch::restartStopwatch() {
+Stopwatch::Stopwatch() : startTime(0) {}
+
+void Stopwatch::restartStopwatch() {
   startTime = millis();
 }
 
-unsigned long PT_Util::Stopwatch::getTimeElapsed() {
+unsigned long Stopwatch::getTimeElapsed() {
   return millis() - startTime;
 }

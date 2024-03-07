@@ -1,3 +1,7 @@
+// Timer.h
+#ifndef TIMER_H
+#define TIMER_H
+
 class Timer {
   public:
     Timer();
@@ -11,4 +15,6 @@ class Timer {
   private:
     int duration;
     unsigned long startTime;
-  };
+};
+
+#endif // TIMER_H

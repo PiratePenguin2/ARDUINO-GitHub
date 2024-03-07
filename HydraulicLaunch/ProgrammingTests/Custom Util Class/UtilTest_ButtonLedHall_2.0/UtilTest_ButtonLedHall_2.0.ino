@@ -1,9 +1,9 @@
-#include "PT_Util.h"
 #include <Arduino.h>
+#include "PT_Util.h"
 
-PT_Util::Button powerButton(2);
-PT_Util::Led statusLamp(3);
-//PT_Util::Timer lampBlink(1000);
+Button powerButton(2, LATCH);
+Led statusLamp(3);
+//Timer lampBlink(1000);
 
 int tps = 21;
 

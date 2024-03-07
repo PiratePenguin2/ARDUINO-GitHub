@@ -1,19 +1,23 @@
 // PT_Util::Button implementation
-PT_Util::Button::Button(int pin) : buttonPin(pin) {
+#include <Arduino.h>
+#include "Button.h"
+#include "Timer.h"
+
+Button::Button(int pin) : buttonPin(pin) {
   pinMode(buttonPin, INPUT);
   mode = PUSH;  // Set default mode
 }
 
-PT_Util::Button::Button(int pin, int mode) : buttonPin(pin), mode(mode) {
+Button::Button(int pin, int mode) : buttonPin(pin), mode(mode) {
   pinMode(buttonPin, INPUT);
 }
 
-/*void PT_Util::Button::controlLed(PT_Util::Led led)
+/*void Button::controlLed(PT_Util::Led led)
 {
   this.isEnabled() ? statusLamp.turnOn() : statusLamp.turnOff();
 }
 
-void PT_Util::Button::controlLed(PT_Util::Led led, int ledMode)
+void Button::controlLed(PT_Util::Led led, int ledMode)
 {
   switch (ledMode) {
     case NORMALLY_OPEN:
@@ -30,11 +34,11 @@ void PT_Util::Button::controlLed(PT_Util::Led led, int ledMode)
   } //Switch
 }*/
 
-bool PT_Util::Button::isPressed() {
+bool Button::isPressed() {
   return (digitalRead(buttonPin) == LOW);
 }
 
-bool PT_Util::Button::isEnabled() {
+bool Button::isEnabled() {
   bool isPushed = isPressed();
   switch (mode) {
     case PUSH:

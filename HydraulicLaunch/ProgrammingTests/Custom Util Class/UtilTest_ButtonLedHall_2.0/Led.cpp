@@ -1,16 +1,20 @@
 // PT_Util::Led implementation
-PT_Util::Led::Led(int pin) : ledPin(pin) {
+#include <Arduino.h>
+#include "Led.h"
+#include "Timer.h"
+
+Led::Led(int pin) : ledPin(pin) {
   state = OFF;
   isOn = false;
   pinMode(ledPin, OUTPUT);
 }
 
-PT_Util::Led::Led(int pin, int newState) : ledPin(pin), state(newState) {
+Led::Led(int pin, int newState) : ledPin(pin), state(newState) {
   isOn = false;
   pinMode(ledPin, OUTPUT);
 }
 
-void PT_Util::Led::update() {
+void Led::update() {
   switch (state) {
     case ON:
       isOn = true;
@@ -53,39 +57,39 @@ void PT_Util::Led::update() {
   }
 }
 
-void PT_Util::Led::setState(int newState) {
+void Led::setState(int newState) {
   state = newState;
   //update();
 }
 
-void PT_Util::Led::setState(int newState, int newOnTime) {
+void Led::setState(int newState, int newOnTime) {
   state = newState;
   onTime = newOnTime;
   offTime = newOnTime;
   //update();
 }
 
-void PT_Util::Led::setState(int newState, int newOnTime, int newOffTime) {
+void Led::setState(int newState, int newOnTime, int newOffTime) {
   state = newState;
   onTime = newOnTime;
   offTime = newOffTime;
   //update();
 }
 
-void PT_Util::Led::turnOn() {
+void Led::turnOn() {
   state = ON;
   update();
 }
 
-void PT_Util::Led::turnOff() {
+void Led::turnOff() {
   state = OFF;
   update();
 }
 
-int PT_Util::Led::getState() {
+int Led::getState() {
     return state;
 }
 
-bool PT_Util::Led::getLampState() {
+bool Led::getLampState() {
   return isOn;
 }
