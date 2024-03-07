@@ -105,6 +105,12 @@ bool PT_Util::Button::isEnabled() {
 
 // PT_Util::Led implementation
 PT_Util::Led::Led(int pin) : ledPin(pin) {
+  state = OFF;
+  isOn = false;
+  pinMode(ledPin, OUTPUT);
+}
+
+PT_Util::Led::Led(int pin, int newState) : ledPin(pin), state(newState) {
   isOn = false;
   pinMode(ledPin, OUTPUT);
 }
@@ -181,10 +187,13 @@ void PT_Util::Led::turnOff() {
   update();
 }
 
-bool PT_Util::Led::getState() {
-  return isOn;
+int PT_Util::Led::getState() {
+    return state;
 }
 
+bool PT_Util::Led::getLampState() {
+  return isOn;
+}
 
 // PT_Util::HallEffectSensor implementation
 PT_Util::HallEffectSensor::HallEffectSensor(int pin) : sensorPin(pin) {

@@ -56,13 +56,15 @@ public:
     #define BLINK 3
   public:
     Led(int pin);
+    Led(int pin, int state);
     void update();
     void setState(int state);
     void setState(int state, int onTime);
     void setState(int state, int onTime, int offTime);
     void turnOn();
     void turnOff();
-    bool getState(); // New function
+    int getState();
+    bool getLampState();
   private:
     bool isOn;
     int ledPin;
