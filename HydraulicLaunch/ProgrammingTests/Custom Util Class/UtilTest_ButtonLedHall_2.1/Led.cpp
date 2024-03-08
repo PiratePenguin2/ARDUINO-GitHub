@@ -93,3 +93,11 @@ int Led::getState() {
 bool Led::getLampState() {
   return isOn;
 }
+
+Led::LedMode Led::getLedMode() const {
+  return ledMode;
+}
+
+void Led::setLedMode(LedMode mode) {
+  ledMode = mode;
+}

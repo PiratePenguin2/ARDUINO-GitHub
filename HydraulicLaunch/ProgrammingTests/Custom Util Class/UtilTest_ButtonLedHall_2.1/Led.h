@@ -9,6 +9,13 @@ class Led {
     #define FLIP 2
     #define BLINK 3
   public:
+    enum LedMode {
+      NO,
+      NORMALLY_OPEN,
+      NC,
+      NORMALLY_CLOSED
+    };
+    
     Led(int pin);
     Led(int pin, int state);
     void update();
@@ -19,6 +26,9 @@ class Led {
     void turnOff();
     int getState();
     bool getLampState();
+    LedMode getLedMode() const;
+    void setLedMode(LedMode mode);
+  
   private:
     bool isOn;
     int ledPin;
@@ -26,6 +36,7 @@ class Led {
     int offTime;
     int state;
     Timer blinkTimer; // Declare blinkTimer as a member variable
+    LedMode ledMode;
 };
   
 #endif // LED_H

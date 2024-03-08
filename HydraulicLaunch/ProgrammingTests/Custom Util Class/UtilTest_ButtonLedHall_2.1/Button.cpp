@@ -1,38 +1,38 @@
-// PT_Util::Button implementation
-#include <Arduino.h>
+// Button.cpp
 #include "Button.h"
 #include "Timer.h"
+#include "Led.h"
+#include <Arduino.h>
 
-Button::Button(int pin) : buttonPin(pin) {
-  pinMode(buttonPin, INPUT);
-  mode = PUSH;  // Set default mode
-}
-
-Button::Button(int pin, ButtonMode m) : buttonPin(pin), mode(m) {
+Button::Button(int pin) : buttonPin(pin), mode(PUSH), enabled(false) {
   pinMode(buttonPin, INPUT);
 }
 
-/*void Button::controlLed(PT_Util::Led led)
-{
-  this.isEnabled() ? statusLamp.turnOn() : statusLamp.turnOff();
+Button::Button(int pin, ButtonMode m) : buttonPin(pin), mode(m), enabled(false) {
+  pinMode(buttonPin, INPUT);
 }
 
-void Button::controlLed(PT_Util::Led led, int ledMode)
-{
-  switch (ledMode) {
-    case NORMALLY_OPEN:
-    case NO:
-      this.isEnabled() ? statusLamp.turnOn() : statusLamp.turnOff();
+void Button::controlLed(Led& led) {
+  led.setLedMode(Led::NO);
+  isEnabled() ? led.turnOn() : led.turnOff();
+}
+
+void Button::controlLed(Led& led, Led::LedMode ledM) {
+  led.setLedMode(ledM);
+  switch (led.getLedMode()) {
+    case Led::NO:
+    case Led::NORMALLY_OPEN:
+      isEnabled() ? led.turnOn() : led.turnOff();
       break;
-    case NORMALLY_CLOSED:
-    case NC:
-      this.isEnabled() ? statusLamp.turnOff() : statusLamp.turnOn();
+    case Led::NC:
+    case Led::NORMALLY_CLOSED:
+      isEnabled() ? led.turnOff() : led.turnOn();
       break;
     default:
-      Serial.println("Unknown Button-Controlled Led Mode: " + ledMode);
+      Serial.println("Unknown Button-Controlled Led Mode: " + led.getLedMode());
       break;
-  } //Switch
-}*/
+  }
+}
 
 bool Button::isPressed() {
   return (digitalRead(buttonPin) == LOW);
@@ -69,7 +69,6 @@ bool Button::isEnabled() {
     default:
       Serial.println("Unknown Button Mode: " + mode);
       break;
-    lastPushed = isPushed;
-  };
+  }
   return enabled;
 }

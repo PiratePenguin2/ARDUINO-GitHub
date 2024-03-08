@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "PT_Util.h"
 
-Button powerButton(2, Button::LATCH);
+Button powerButton(2, Button::TAP);
 Led statusLamp(3);
 //Timer lampBlink(1000);
 
@@ -15,8 +15,8 @@ void setup() {
 
 void loop() {
 
-  //powerButton.controlLed(statusLamp);
-  powerButton.isEnabled() ? statusLamp.turnOn() : statusLamp.turnOff();
+  powerButton.controlLed(statusLamp, Led::NC);
+  //powerButton.isEnabled() ? statusLamp.turnOn() : statusLamp.turnOff();
   
   statusLamp.update();
   delay(1000 / tps);
