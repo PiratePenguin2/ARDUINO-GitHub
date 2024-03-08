@@ -1,21 +1,25 @@
-// PT_Util::Led implementation
+// Led.cpp
 #include <Arduino.h>
 #include "Led.h"
 #include "Timer.h"
 
-Led::Led(int pin) : ledPin(pin) {
-  state = OFF;
+Led::Led(int pin) : ledPin(pin), ledState(OFF), ledMode(NO) {
   isOn = false;
   pinMode(ledPin, OUTPUT);
 }
 
-Led::Led(int pin, int newState) : ledPin(pin), state(newState) {
+Led::Led(int pin, LedState newState) : ledPin(pin), ledState(newState), ledMode(NO) {
+  isOn = false;
+  pinMode(ledPin, OUTPUT);
+}
+
+Led::Led(int pin, LedState ledS, LedMode ledM) : ledPin(pin), ledState(ledS), ledMode(ledM) {
   isOn = false;
   pinMode(ledPin, OUTPUT);
 }
 
 void Led::update() {
-  switch (state) {
+  switch (ledState) {
     case ON:
       isOn = true;
       digitalWrite(ledPin, HIGH);
@@ -28,22 +32,18 @@ void Led::update() {
       isOn = !isOn;
       digitalWrite(ledPin, isOn ? HIGH : LOW);
       if (isOn)
-        state = ON;
+        ledState = ON;
       else
-        state = OFF;
+        ledState = OFF;
       break;
     case BLINK:
-      if (blinkTimer.timerFinished())
-      {
+      if (blinkTimer.timerFinished()) {
         Serial.println(blinkTimer.getElapsedTime());
-        if (!isOn)
-        {
+        if (!isOn) {
           isOn = true;
           digitalWrite(ledPin, HIGH);
           blinkTimer.setTimer(onTime);
-        }
-        else
-        {
+        } else {
           isOn = false;
           digitalWrite(ledPin, LOW);
           blinkTimer.setTimer(offTime);
@@ -52,42 +52,37 @@ void Led::update() {
       }
       break;
     default:
-      Serial.println("ERROR: Unknown LED State: " + state);
+      Serial.println("ERROR: Unknown LED State: " + static_cast<int>(ledState));
       break;
   }
 }
 
-void Led::setState(int newState) {
-  state = newState;
-  //update();
+void Led::setLedState(LedState ledS) {
+  ledState = ledS;
 }
 
-void Led::setState(int newState, int newOnTime) {
-  state = newState;
+void Led::setLedState(LedState ledS, int newOnTime) {
+  ledState = ledS;
   onTime = newOnTime;
   offTime = newOnTime;
-  //update();
 }
 
-void Led::setState(int newState, int newOnTime, int newOffTime) {
-  state = newState;
+void Led::setLedState(LedState ledS, int newOnTime, int newOffTime) {
+  ledState = ledS;
   onTime = newOnTime;
   offTime = newOffTime;
-  //update();
 }
 
 void Led::turnOn() {
-  state = ON;
-  update();
+  ledState = ON;
 }
 
 void Led::turnOff() {
-  state = OFF;
-  update();
+  ledState = OFF;
 }
 
-int Led::getState() {
-    return state;
+int Led::getLedState() {
+  return static_cast<int>(ledState);
 }
 
 bool Led::getLampState() {

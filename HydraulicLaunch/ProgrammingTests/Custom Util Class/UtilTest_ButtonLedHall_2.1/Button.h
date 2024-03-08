@@ -16,7 +16,7 @@ class Button {
     Button(int pin);
     Button(int pin, ButtonMode m);
     void controlLed(Led& led);
-    void controlLed(Led& led, Led::LedMode ledM);
+    void controlLed(Led& led, Led::LedMode ledM);//, Led::LedState ledS);
     bool isPressed();
     bool isEnabled();
   

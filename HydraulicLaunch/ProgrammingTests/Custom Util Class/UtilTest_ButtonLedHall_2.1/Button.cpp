@@ -13,11 +13,10 @@ Button::Button(int pin, ButtonMode m) : buttonPin(pin), mode(m), enabled(false) 
 }
 
 void Button::controlLed(Led& led) {
-  led.setLedMode(Led::NO);
   isEnabled() ? led.turnOn() : led.turnOff();
 }
 
-void Button::controlLed(Led& led, Led::LedMode ledM) {
+void Button::controlLed(Led& led, Led::LedMode ledM) {//, LED::LedState ledS) {
   led.setLedMode(ledM);
   switch (led.getLedMode()) {
     case Led::NO:
