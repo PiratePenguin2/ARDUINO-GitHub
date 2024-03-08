@@ -13,24 +13,24 @@ Button::Button(int pin, ButtonMode m) : buttonPin(pin), mode(m), enabled(false) 
 }
 
 void Button::controlLed(Led& led) {
-  isEnabled() ? led.turnOn() : led.turnOff();
-}
-
-void Button::controlLed(Led& led, Led::LedMode ledM) {//, LED::LedState ledS) {
-  led.setLedMode(ledM);
-  switch (led.getLedMode()) {
+    switch (led.getLedMode()) {
     case Led::NO:
     case Led::NORMALLY_OPEN:
-      isEnabled() ? led.turnOn() : led.turnOff();
+      isEnabled() ? led.setLedState(Led::BLINK, 250) : led.turnOff();
       break;
     case Led::NC:
     case Led::NORMALLY_CLOSED:
-      isEnabled() ? led.turnOff() : led.turnOn();
+      isEnabled() ? led.turnOn() : led.setLedState(Led::BLINK, 250);
       break;
     default:
       Serial.println("Unknown Button-Controlled Led Mode: " + led.getLedMode());
       break;
   }
+}
+
+void Button::controlLed(Led& led, Led::LedMode ledM) {//, LED::LedState ledS) {
+  led.setLedMode(ledM);
+  this->controlLed(led);
 }
 
 bool Button::isPressed() {

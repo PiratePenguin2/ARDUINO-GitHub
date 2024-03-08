@@ -17,8 +17,7 @@ void setup() {
 
 void loop() {
 
-  powerButton.controlLed(statusLamp);
-  //powerButton.isEnabled() ? statusLamp.turnOn() : statusLamp.turnOff();
+  powerButton.controlLed(statusLamp);//, Led::ON, Led::BLINK);
   
   statusLamp.update();
   delay(1000 / tps);

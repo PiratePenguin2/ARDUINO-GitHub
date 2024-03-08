@@ -45,6 +45,7 @@ private:
     Timer blinkTimer;
     LedMode ledMode;  // Added LedMode here
     LedState ledState;
+    LedState defaultLedState;
 };
 
 #endif // LED_H
