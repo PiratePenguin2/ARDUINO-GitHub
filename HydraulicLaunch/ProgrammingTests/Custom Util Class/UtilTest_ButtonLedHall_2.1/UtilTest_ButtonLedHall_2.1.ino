@@ -21,27 +21,3 @@ void loop() {
   statusLamp.update();
   delay(1000 / tps);
 }
-
-
-
-
-  /*
-  //statusLamp.setState(BLINK, 250, 250);
-
-  if (lampBlink.timerFinished())
-  {
-    if (statusLamp.getState() == OFF)
-    {
-      statusLamp.setState(BLINK, 250);
-      lampBlink.setTimer(5000);
-    }
-    else if (statusLamp.getState() == BLINK)
-    {
-      statusLamp.turnOff();
-      lampBlink.setTimer(5000);
-    }
-    else
-    {
-      statusLamp.turnOn();
-    }
-  }*/
