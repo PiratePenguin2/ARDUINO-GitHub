@@ -14,7 +14,7 @@ void setup() {
     int speedA = 2; // Adjust speed as needed
     int speedB = 4;
     servoA.move(targetPositionA, speedA);
-    servoB.move(targetPositionA, speedB);
+    servoB.move(targetPositionA);
 }
 
 void loop() {
