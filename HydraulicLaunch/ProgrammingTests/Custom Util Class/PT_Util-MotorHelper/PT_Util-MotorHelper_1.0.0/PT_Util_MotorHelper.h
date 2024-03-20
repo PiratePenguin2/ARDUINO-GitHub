@@ -6,6 +6,19 @@ struct Move {
     int targetPosition;
     int speed;
 };
+/*
+struct StepperPins {
+    int pinA;
+    int pinB;
+    int pinC;
+    int pinD;
+};
+
+struct DCDriverPins {
+    int pinA;
+    int pinB;
+    int pinC;
+};*/
 
 class Motor {
 public:
@@ -96,5 +109,37 @@ private:
         vTaskDelete(NULL);
     }
 };
+/*
+class DCBrushed : public Motor {
+private:
+    DCBrushed dcMotor;
+    int motorPin;
+    TaskHandle_t taskHandle;
+    bool moving;
+    float speed;
+}
 
+class DCBrushedDriver : public DCBrushed {
+private:
+    override 
+    LinkedList<DCDriverPins> motorPins; // overide motorPin with motorpins list
+}
+
+class DCBrushless : public Motor {
+private:
+    DCBrushless dcBrushlessMotor;
+    int escPin;
+    TaskHandle_t taskHandle;
+    bool moving;
+    float speed;
+}
+
+class Stepper : public Motor {
+private:
+    Stepper stepperMotor;
+    LinkedList<StepperPins> stepperPins;
+    TaskHandle_t taskHandle;
+    bool moving;
+    float speed;
+}*/
 // Implement other motor classes (DCBrushed, DCBrushless, Stepper) similarly
