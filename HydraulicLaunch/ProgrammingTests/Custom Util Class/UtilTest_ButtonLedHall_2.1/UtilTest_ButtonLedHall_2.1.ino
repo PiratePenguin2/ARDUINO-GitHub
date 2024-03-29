@@ -2,7 +2,8 @@
 #include "PT_Util.h"
 
 Button powerButton(2, Button::PUSH);
-Led statusLamp(3, Led::BLINK, Led::NC);
+Led statusLamp(9, Led::BLINK, Led::NC);
+
 //Timer lampBlink(1000);
 
 int tps = 21;
@@ -18,7 +19,6 @@ void setup() {
 void loop() {
 
   powerButton.controlLed(statusLamp);//, Led::ON, Led::BLINK);
-  
   statusLamp.update();
   delay(1000 / tps);
 }

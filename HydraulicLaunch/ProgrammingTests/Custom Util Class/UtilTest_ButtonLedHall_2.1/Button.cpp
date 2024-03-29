@@ -39,6 +39,7 @@ bool Button::isPressed() {
 
 bool Button::isEnabled() {
   bool isPushed = isPressed();
+  //Serial.println(mode);
   switch (mode) {
     case PUSH:
       enabled = isPushed;

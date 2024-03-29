@@ -38,7 +38,7 @@ void Led::update() {
       break;
     case BLINK:
       if (blinkTimer.timerFinished()) {
-        Serial.println(blinkTimer.getElapsedTime());
+        //Serial.println(blinkTimer.getElapsedTime());
         if (!isOn) {
           isOn = true;
           digitalWrite(ledPin, HIGH);
@@ -47,7 +47,7 @@ void Led::update() {
           isOn = false;
           digitalWrite(ledPin, LOW);
           blinkTimer.setTimer(offTime);
-          Serial.println();
+          //Serial.println();
         }
       }
       break;

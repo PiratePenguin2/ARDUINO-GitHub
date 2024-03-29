@@ -1,7 +1,7 @@
 //Vcc Red, Gnd Black, A Phase White, B Phase Green
 
-int counter = 0;
-int temp = 0;
+long counter = 0;
+long temp = 0;
 
 void setup() {
   Serial.begin(9600);
