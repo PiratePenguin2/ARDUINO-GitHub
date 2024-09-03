@@ -1,0 +1,14 @@
+
+
+ON STARTUP
+    Arm EStops
+    Set all Motors to defaults/failsafe states (stopped)
+
+    Arm Buttons
+    Lamp Test w/ Aknowledge (lamps blink in opposite pulses)(maybe bypass during coding)
+
+    Interpret sensor readings
+        Find clusters
+        Report locations of each detected train, to be Aknowledged for each
+    
+
