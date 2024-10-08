@@ -105,7 +105,7 @@ Sensor hallHoldA;
 Sensor hallHoldB;
 Sensor btnDisp;
 
-Timer sensorTimer = new Timer();
+Timer sensorTimer;
 
 int count = 0;
 
