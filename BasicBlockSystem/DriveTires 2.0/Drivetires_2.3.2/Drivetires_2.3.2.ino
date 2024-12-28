@@ -6,6 +6,10 @@
 #include "Sensor.h"
 #include "Timer.h"
 
+#define SERVO_UP 60 //60 tight, 80 (maybe 90) park
+#define SERVO_PARK 100
+#define SERVO_DOWN 150
+
 class Blocks {
   public:
     enum BlockState {
@@ -75,7 +79,6 @@ class Blocks {
   private:
     BlockState currentState;
 };
-
 
 
 // Create PCA9685 objects for different boards
@@ -251,51 +254,51 @@ void loop() {
   {
     tire1A.write(50);
     tire1B.write(50);
-    servo1A.write(45); //30
-    servo1B.write(45);
+    servo1A.write(SERVO_UP); //30
+    servo1B.write(SERVO_UP);
   }
   else if (station.getState() == 2) //APPROACHING
   {
     tire1A.write(0);
     tire1B.write(0);
-    servo1A.write(150); //30
-    servo1B.write(150);
+    servo1A.write(SERVO_DOWN); //30
+    servo1B.write(SERVO_DOWN);
   }
   else if (station.getState() == 3) //THROUGH
   {
     tire1A.write(-100);
     tire1B.write(-100);
-    servo1A.write(45); //30
-    servo1B.write(45);
+    servo1A.write(SERVO_UP); //30
+    servo1B.write(SERVO_UP);
   }
   else if (station.getState() == 4) //CENTERING
   {
     tire1A.write(0);
     tire1B.write(0);
-    servo1A.write(150); //30
-    servo1B.write(150);
+    servo1A.write(SERVO_DOWN); //30
+    servo1B.write(SERVO_DOWN);
   }
   else if (station.getState() == 5) //PARKING
   {
     tire1A.write(35);
     tire1B.write(35);
-    servo1A.write(45); //30
-    servo1B.write(45);
+    servo1A.write(SERVO_UP); //30
+    servo1B.write(SERVO_UP);
   }
   else if (station.getState() == 6) //PARKED
   {
     tire1A.write(0);
     tire1B.write(0);
-    servo1A.write(45); //30
-    servo1B.write(45);
+    servo1A.write(SERVO_PARK); //30
+    servo1B.write(SERVO_PARK);
   }
 
   else
   {
     tire1A.write(0);
     tire1B.write(0);
-    servo1A.write(150);
-    servo1B.write(150);
+    servo1A.write(SERVO_DOWN);
+    servo1B.write(SERVO_DOWN);
   }
   
 Serial.print(station.getState());
