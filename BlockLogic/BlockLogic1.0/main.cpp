@@ -78,6 +78,9 @@ Block station
             0 seconds
 
     Backwards.Exit0:
+        When multimoveA also free (or contains the same train)
+        When fbr also free (or contains the same train)
+
         Dispatch Interval:
             -1 seconds
         Delay on Arrival:
@@ -86,6 +89,9 @@ Block station
             0 seconds
     
     Backwards.Exit1:    // Move right through multimoveB&A without pausing. multimoveB&A must also approve this
+        When multimoveB is free (or contains the same train)
+        When multimoveA also free (or contains the same train)
+        When fbr also free (or contains the same train)
         When multimoveB can do its Backwards.Exit0
         When multimoveA can do its Backwards.Exit0
 
@@ -223,6 +229,7 @@ Block multimoveA
             -1 seconds
 
     Backwards.Exit0:
+        When fbr free free (or contains the same train)
         Dispatch Interval:
             -1 seconds
         Delay on Arrival:
@@ -246,6 +253,8 @@ Block multimoveB
             -1 seconds
 
     Backwards.Exit0:
+        When multimoveA is free (or contains the same train)
+        When fbr also free (or contains the same train)
         Dispatch Interval:
             -1 seconds
         Delay on Arrival:
