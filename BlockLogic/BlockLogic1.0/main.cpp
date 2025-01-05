@@ -475,28 +475,37 @@ Launch main Segment tophat
         *WHEN Switch transfer.TrackA = pos2
     DISABLED if Switch transfer.TrackA = any other pos
 
+
+//+-------------------------------------------------------------------------------------------------------------------+
+    BLOCK LOGIC
+//+-------------------------------------------------------------------------------------------------------------------+
+
+// Model where the train is only in the park zone of one block at a time
+//+-------------------------------------------------------------------------------------------------------------------+
+    STATE CHANGING
+//+-------------------------------------------------------------------------------------------------------------------+
+IF train front bogie enters block zone (from start of block)
+    Block*.setState(PARKING_FORWARD) // attempt to park on block's parking zone (drive forward)
+
+IF train back bogie enters block zone (from end of block)
+    Block*.setState(PARKING_BACKWARD) // attempt to park on block's parking zone (drive backward)
+
+
+WHILE next block free (leave forward) && train on block
+    if dispatch interval complete
+        if delay on arrival complete // Checks that train has stopped if it needed to stop first
+            enable dispatch to next block (leave forward)
+
+if next block free (leave backward) && train on block
+    if dispatch interval complete
+        if delay on arrival complete // Checks that train has stopped if it needed to stop first
+            enable dispatch to next block (leave backward)
+    
+
+
+
+
 */
-
-class Block {
-    public:
-        Block() {
-            cout << "Block created" << endl;
-        }
-};
-
-/*class Switch : public Block {
-    public:
-        Switch() {
-            cout << "Switch created" << endl;
-        }
-};
-
-class Station : public Block {
-    public:
-        Station() {
-            cout << "Station created" << endl;
-        }
-};*/
 
 int main() {
 
