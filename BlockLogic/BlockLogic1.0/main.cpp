@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 /*
@@ -65,6 +66,10 @@ Block station
         Delay on Arrival:  // 0s: Train must stop. -1s: Train can roll through if allowed to leave
             2 seconds
         Delay on Departure:  // 0s: Train must stop. -1s: Train can roll through if allowed to leave
+            0 seconds
+        Delay after next block clears:
+            0 seconds
+        Delay after next block clears (if this block fully stopped):
             0 seconds
 
     Forward.Exit1:
@@ -500,14 +505,100 @@ if next block free (leave backward) && train on block
     if dispatch interval complete
         if delay on arrival complete // Checks that train has stopped if it needed to stop first
             enable dispatch to next block (leave backward)
-    
-
-
-
 
 */
 
-int main() {
+class Block {
+    public:
+        // Global states
+        static bool eStopState;
+        static vector<bool> stationStopStates;
 
+        static void declareStationStops(int numStations) {
+            stationStopStates = vector<bool>(numStations, true);
+        }
+        static void updateGlobalStates(bool eStop, const vector<bool>& stationStop) {
+            eStopState = eStop;
+            if (stationStopStates.size() != stationStop.size()) {
+                cout << "Station stop states size does not match declared size" << endl;
+            }
+            else {
+                stationStopStates = stationStop;
+            }
+        }
+
+
+        void forceTrainOnBlock() {
+            forceTrainOnBlock(0);
+        }
+        void forceTrainOnBlock(int trainNum) {
+            trainNumOnBLock = trainNum;
+            blockOccupied = true;
+        }
+        void forceClearBlock() {
+            trainNumOnBLock = -1;
+            blockOccupied = false;
+        }
+
+
+
+
+
+
+        /*void setState(int state) {
+            this->state = state;
+        }*/
+    private:
+        //int state;
+        // FORCE Block Settings
+        bool blockEnabled;
+        bool blockSkip;
+
+        bool blockOccupied;
+        int trainNumOnBLock = -1; // -1 means no train, 0 means unknown train number
+};
+
+
+int stationStops = 4;
+
+// Initialize static members
+bool Block::eStopState = false;
+vector<bool> Block::stationStopStates(stationStops, true); 
+
+int main() {
+    // Example usage
+    Block::declareStationStops(stationStopStates.size()); // Declare 5 stations
+    Block::updateGlobalStates(true, vector<bool>{false, true, true, false, true});
+
+    cout << "eStopState: " << Block::eStopState << endl;
+    cout << "Station Stop States: ";
+    for (bool state : Block::stationStopStates) {
+        cout << state << " ";
+    }
+    cout << endl;
+
+    return 0;
 }
+
+
+/*Block(Block* block) {
+            if (block->blockEnabled && !block->blockSkip) {
+                if (block->blockOccupied) {
+                    if (block->trainNumOnBLock != -1) {
+                        // Train is on block
+                        if (block->state == 0) {
+                            // Train is entering block
+                            block->setState(1);
+                        }
+                    } else {
+                        // Train is not on block
+                        if (block->state == 1) {
+                            // Train is leaving block
+                            block->setState(0);
+                        }
+                    }
+                }
+            }
+        }*/
+
 
