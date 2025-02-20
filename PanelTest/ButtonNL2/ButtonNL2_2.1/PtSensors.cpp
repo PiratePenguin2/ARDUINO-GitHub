@@ -18,12 +18,17 @@ std::string Sensor::getName() const {
 }
 
 // Sensors Class Implementation
-void Sensors::addCollection() {
+void Sensors::newCollection() {
     collections.emplace_back();       // Add a new empty collection
     states.emplace_back();            // Add a new empty state vector
 }
 
-void Sensors::addSensorToCollection(size_t collectionIndex, int pin, const std::string& name) {
+void Sensors::newCollection(String name) {
+    collections.emplace_back(name);       // Add a new empty collection
+    states.emplace_back();            // Add a new empty state vector
+}
+
+void Sensors::newSensor(size_t collectionIndex, int pin, const std::string& name) {
     if (collectionIndex >= collections.size()) {
         std::cerr << "Error: Collection index out of bounds!" << std::endl;
         return;

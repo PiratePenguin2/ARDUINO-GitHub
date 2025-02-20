@@ -5,14 +5,14 @@ int main() {
     Sensors sensors;
 
     // Add collections
-    sensors.addCollection(); // Collection 0
-    sensors.addCollection(); // Collection 1
+    sensors.newCollection("Buttons"); // Collection 0
+    sensors.newCollection("HallEffect"); // Collection 1
 
     // Add sensors to collections
-    sensors.addSensorToCollection(0, 5, "Temperature");
-    sensors.addSensorToCollection(0, 6, "Humidity");
-    sensors.addSensorToCollection(1, 7, "Light");
-    sensors.addSensorToCollection(1, 8, "Pressure");
+    sensors.newSensor(0, 5, "Temperature");
+    sensors.newSensor(0, 6, "Humidity");
+    sensors.newSensor(0, 7, "Light");
+    sensors.newSensor(0, 8, "Pressure");
 
     // Batch update all sensors
     sensors.updateAll();

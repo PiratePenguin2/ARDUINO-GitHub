@@ -19,8 +19,8 @@ private:
 
 class Sensors {
 public:
-    void addCollection();                                     // Add a new collection
-    void addSensorToCollection(size_t collectionIndex, int pin, const std::string& name);
+    void newCollection();                                     // Add a new collection
+    void newSensor(size_t collectionIndex, int pin, const std::string& name);
     void updateAll();                                         // Update all sensors and cache their states
     std::vector<std::vector<bool>> getStates() const;         // Get the cached states of all sensors
     bool getSensorState(size_t collectionIndex, size_t sensorIndex) const; // Get an individual sensor's state
