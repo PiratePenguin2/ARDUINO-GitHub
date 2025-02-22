@@ -8,12 +8,12 @@ Adafruit_PCF8574 pcf2;
 #define NUM_BUTTONS 8
 
 // Define button pins
-const int buttonPins[NUM_BUTTONS][2] = {
-  {9, 8},
-  {7, 6},
-  {5, 4},
-  {3, 2}
-};
+// const int buttonPins[NUM_BUTTONS][2] = {
+//   {9, 8},
+//   {7, 6},
+//   {5, 4},
+//   {3, 2}
+// };
 // Define corresponding keys for each button
 const char keyMap[NUM_BUTTONS][2] = {
   {'1', '2'},
@@ -21,7 +21,7 @@ const char keyMap[NUM_BUTTONS][2] = {
   {KEY_RETURN, '0'},
   {'8', '2'},
   {'9', '3'},
-  {'7', '1'},
+  {'4', '6'},
   {'0', '0'},
   {KEY_F8, KEY_F8}
 };
@@ -48,12 +48,12 @@ void setup() {
   else {
     Serial.println("PCF 1 Initialized!");
   }
-  // if (!pcf2.begin(0x21)) { // Initialize I²C
-  //   Serial.println("PCF 2 not found");
-  // }
-  // else {
-  //   Serial.println("PCF 2 Initialized!");
-  // }
+  if (!pcf2.begin(0x21)) { // Initialize I²C
+    Serial.println("PCF 2 not found");
+  }
+  else {
+    Serial.println("PCF 2 Initialized!");
+  }
 
   Keyboard.begin(); // Initialize the keyboard
   
@@ -83,10 +83,12 @@ void setup() {
 void loop() {
   updateButtons();
   if (lastButtonStates[0][0] == true || lastButtonStates[1][0] == true) {
-    if (buttonsTripped[2][0] == true) {
+    // DispatchL
+    if (lastButtonStates[2][0] == true) { //&& lastButtonStates[6][0] == true) {
       Keyboard.write(keyMap[2][0]);
     }
 
+    // Toggle 1: Restraings
     if (buttonsTripped[3][0] == true) {
       Keyboard.write(keyMap[3][0]);
     }
@@ -94,6 +96,7 @@ void loop() {
       Keyboard.write(keyMap[3][1]);
     }
     
+    // Toggle 2: Gates
     if (buttonsTripped[4][0] == true) {
       Keyboard.write(keyMap[4][0]);
     }
@@ -101,6 +104,7 @@ void loop() {
       Keyboard.write(keyMap[4][1]);
     }
 
+    // Toggle 3: Flier Lock
     if (buttonsTripped[5][0] == true) {
       Keyboard.write(keyMap[5][0]);
     }
@@ -113,12 +117,12 @@ void loop() {
     // }
 
     // while (lastButtonStates[7][0] == true || lastButtonStates[8][1] == false) {
-    //   if (buttonsTripped[7][0] == true) {
-    //     Keyboard.write(keyMap[7][0]);
-    //   }
-    //   else if (buttonsTripped[7][1] == true) {
-    //     Keyboard.write(keyMap[7][1]);
-    //   }
+      if (buttonsTripped[7][0] == true) {
+        Keyboard.write(keyMap[7][0]);
+      }
+      else if (buttonsTripped[7][1] == true) {
+        Keyboard.write(keyMap[7][1]);
+      }
     //   delay(100);
     // }
   }
@@ -136,10 +140,9 @@ void updateButtons() {
       // else if (i < 8) {
       //   currentButtonState = !digitalRead(buttonPins[i - 4][2]);
       // }
-      // else if (i < 8) {
-      //   currentButtonState = !pcf2.digitalRead(2); // Read button (invert logic)
-      //   Serial.println(currentButtonState);
-      // }
+      else if (i < 8) {
+        currentButtonState = !pcf2.digitalRead(((i - 4) * 2) + j); // Read button (invert logic)
+      }
       else {
         continue;
       }
