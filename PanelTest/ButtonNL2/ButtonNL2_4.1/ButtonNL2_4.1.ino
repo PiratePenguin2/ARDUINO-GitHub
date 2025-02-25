@@ -22,9 +22,19 @@ const char keyMap[NUM_BUTTONS][2] = {
   {'8', '2'},
   {'9', '3'},
   {'4', '6'},
-  {'0', '0'},
+  {'KEY_RETURN', '0'},
   {KEY_F8, KEY_F8}
 };
+// const char keyMap[NUM_BUTTONS][2] = {
+//   {'1', '2'},           // Mode A
+//   {'3', '4'},           // Mode B
+//   {'c', '0'},    // Dispatch A
+//   {'v', 't'},           // Harness
+//   {'C', 'V'},           // Gates
+//   {'4', '6'},           // Special
+//   {'c', '0'},  // Dispatch B
+//   {KEY_F8, KEY_F8}
+// };
 //const char keyMap[NUM_BUTTONS] = {'3', '9', KEY_RETURN, '2', '8', '0', KEY_F8, KEY_F8};
 
 // Store previous button states
@@ -33,6 +43,7 @@ bool currentButtonState = false;
 bool lastButtonStates[NUM_BUTTONS][2] = {false, false};
 bool buttonsTripped[NUM_BUTTONS][2] = {false, false};
 bool buttonsUntripped[NUM_BUTTONS][2] = {false, false};
+static bool dispatchToggled = false;
 
 void setup() {
   Serial.begin(115200);
@@ -84,8 +95,16 @@ void loop() {
   updateButtons();
   if (lastButtonStates[0][0] == true || lastButtonStates[1][0] == true) {
     // DispatchL
-    if (lastButtonStates[2][0] == true) { //&& lastButtonStates[6][0] == true) {
-      Keyboard.write(keyMap[2][0]);
+    if (lastButtonStates[2][0] && lastButtonStates[6][0]) {
+      if (!dispatchToggled) { // If the key is not pressed yet
+        Keyboard.press(keyMap[2][0]); // Press the key
+        dispatchToggled = true;
+      }
+    } else {
+      if (dispatchToggled) { // If the key was pressed before
+        Keyboard.release(keyMap[2][0]); // Release the key
+        dispatchToggled = false;
+      }
     }
 
     // Toggle 1: Restraings
@@ -103,6 +122,18 @@ void loop() {
     else if (buttonsTripped[4][1] == true) {
       Keyboard.write(keyMap[4][1]);
     }
+    // if (buttonsTripped[4][0] == true) {
+    //   Keyboard.press(KEY_LEFT_SHIFT);  // Hold Shift
+    //   Keyboard.press('c');             // Press 'C'
+    //   delay(10);                       // Small delay to ensure proper key press
+    //   Keyboard.releaseAll();           // Release both keys
+    // }
+    // else if (buttonsTripped[4][1] == true) {
+    //   Keyboard.press(KEY_LEFT_SHIFT);  // Hold Shift
+    //   Keyboard.press('v');             // Press 'C'
+    //   delay(10);                       // Small delay to ensure proper key press
+    //   Keyboard.releaseAll();           // Release both keys
+    // }
 
     // Toggle 3: Flier Lock
     if (buttonsTripped[5][0] == true) {
