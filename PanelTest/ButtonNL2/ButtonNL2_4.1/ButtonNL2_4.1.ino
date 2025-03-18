@@ -46,24 +46,24 @@ bool buttonsUntripped[NUM_BUTTONS][2] = {false, false};
 static bool dispatchToggled = false;
 
 void setup() {
-  Serial.begin(115200);
-  while (!Serial);
-  Serial.println("Serial Initialized!");
+  //Serial.begin(115200);
+  //while (!// Serial);
+  // Serial.println("// Serial Initialized!");
 
   Wire.begin();
-  Serial.println("Wire Initialized!");
+  // Serial.println("Wire Initialized!");
 
   if (!pcf1.begin(0x20)) { // Initialize I²C
-    Serial.println("PCF 1 not found");
+    // Serial.println("PCF 1 not found");
   }
   else {
-    Serial.println("PCF 1 Initialized!");
+    // Serial.println("PCF 1 Initialized!");
   }
   if (!pcf2.begin(0x21)) { // Initialize I²C
-    Serial.println("PCF 2 not found");
+    // Serial.println("PCF 2 not found");
   }
   else {
-    Serial.println("PCF 2 Initialized!");
+    // Serial.println("PCF 2 Initialized!");
   }
 
   Keyboard.begin(); // Initialize the keyboard
@@ -88,7 +88,7 @@ void setup() {
       // }
     }
   }
-  Serial.println("Everything initialized!");
+  // Serial.println("Everything initialized!");
 }
 
 void loop() {
@@ -181,28 +181,28 @@ void updateButtons() {
       if (currentButtonState == !lastButtonStates[i][j]) {
         if (currentButtonState) {
           buttonsTripped[i][j] = true;
-          Serial.print("Button pressed: ");
-          Serial.print(i);
-          Serial.print(" ");
-          Serial.println(j);
-        }
-        else {
-          buttonsUntripped[i][j] = true;
-          // Serial.print("Button released: ");
+          // Serial.print("Button pressed: ");
           // Serial.print(i);
           // Serial.print(" ");
           // Serial.println(j);
+        }
+        else {
+          buttonsUntripped[i][j] = true;
+          // // Serial.print("Button released: ");
+          // // Serial.print(i);
+          // // Serial.print(" ");
+          // // Serial.println(j);
         }
         lastButtonStates[i][j] = currentButtonState;
       }
     }
     // if (currentButtonStates[i][0] == true && currentButtonStates[i][1] == true) {
-    //   //Serial.print("Both NO and NC states for button: ");
-    //   //Serial.println(i);
+    //   //// Serial.print("Both NO and NC states for button: ");
+    //   //// Serial.println(i);
     // }
     // else if (!currentButtonStates[i][0] == false && !currentButtonStates[i][1] == false) {
-    //   //Serial.print("Wire disconnected for button: ");
-    //   //Serial.println(i);
+    //   //// Serial.print("Wire disconnected for button: ");
+    //   //// Serial.println(i);
     // }
   }
 }
