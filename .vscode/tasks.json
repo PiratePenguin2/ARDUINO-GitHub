@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Arduino Compile",
+            "type": "shell",
+            "command": "/opt/homebrew/bin/arduino-cli",
+            "args": [
+                "compile",
+                "--fqbn",
+                "arduino:avr:uno",
+                "${fileDirname}"
+            ],
+            "group": {
+                "kind": "none"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Arduino Upload",
+            "type": "shell",
+            "command": "/opt/homebrew/bin/arduino-cli",
+            "args": [
+                "upload",
+                "-p",
+                "/dev/cu.usbserial-1410",
+                "--fqbn",
+                "arduino:avr:uno",
+                "${fileDirname}"
+            ],
+            "group": {
+                "kind": "none"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
