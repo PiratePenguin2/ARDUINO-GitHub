@@ -10,10 +10,10 @@ CRGB leds[NUM_LEDS];
 
 class PulseEffect {
 public:
-    PulseEffect(int startIdx, int endIdx, CRGB baseColor, CRGB pulseColor, int moveDuration)
-        : startIndex(startIdx), endIndex(endIdx), baseColor(baseColor), pulseColor(pulseColor), moveDuration(moveDuration), active(false) {
+    PulseEffect(int startIdx, int endIdx, CRGB baseColor, CRGB pulseColor, int moveDuration, int startLength, int endLength)
+        : startIndex(startIdx), endIndex(endIdx), baseColor(baseColor), pulseColor(pulseColor), moveDuration(moveDuration),
+          startLength(startLength), endLength(endLength), active(false) {
         pulseStartTime = 0;
-        pulseLength = random(3, 10); // Initial random pulse length
     }
 
     void start() {
@@ -32,10 +32,26 @@ public:
             return;
         }
 
-        int pulsePos = map(pulseTime, 0, moveDuration, startIndex, endIndex);
-        pulseLength = random(3, 10); // Change pulse length dynamically
-        for (int i = startIndex; i < endIndex; i++) {
-            if (i >= pulsePos && i < pulsePos + pulseLength) {
+        // Calculate current pulse length
+        int pulseLength = map(pulseTime, 0, moveDuration, startLength, endLength);
+        
+        // Calculate front and back speeds automatically
+        float frontSpeed = float(endIndex + endLength - startIndex) / moveDuration;
+        float backSpeed = float(endIndex - (startIndex - startLength)) / moveDuration;
+
+        // Compute positions
+        int frontPos = startIndex + frontSpeed * pulseTime;
+        int backPos = (startIndex - startLength) + backSpeed * pulseTime;
+
+        // Ensure backPos does not exceed frontPos
+        if (backPos > frontPos) backPos = frontPos;
+
+        // Clamp positions within bounds
+        frontPos = constrain(frontPos, startIndex, endIndex + endLength);
+        backPos = constrain(backPos, startIndex - startLength, endIndex);
+
+        for (int i = 97; i < NUM_LEDS; i++) {
+            if (i >= backPos && i <= frontPos) {
                 leds[i] = pulseColor;
             } else {
                 leds[i] = baseColor;
@@ -47,12 +63,12 @@ private:
     int startIndex, endIndex;
     CRGB baseColor, pulseColor;
     int moveDuration;
-    int pulseLength;
     int pulseStartTime;
+    int startLength, endLength;
     bool active;
 };
 
-PulseEffect pulse1(97, 160, CRGB(30, 30, 255), CRGB(255, 8, 0), 5000);
+PulseEffect pulse1(97, 160, CRGB(30, 30, 255), CRGB(255, 8, 0), 200, 5, 15);
 unsigned long lastPulseTime = 0;
 
 void setup() {
