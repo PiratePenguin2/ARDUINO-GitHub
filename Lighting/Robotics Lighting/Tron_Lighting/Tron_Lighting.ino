@@ -10,11 +10,11 @@
 #define LIT_BRIGHTNESS 255   // Maximum brightness of the wave
 #define DULL_BRIGHTNESS 40   // Minimum brightness of the wave
 //#define COLOR         CHSV(225, 255, 255) // Base color (Hue, Saturation, Value)
-#define COLOR         CRGB(30,30,255)
-//#define COLOR         CRGB(255,8,0)
+//#define COLOR         CRGB(30,30,255)
+#define COLOR         CRGB(255,8,0)
 #define SPEED         20    // Overall speed of effect (lower is faster)
 
-#define BRIGHTNESS_MASTER 100
+#define BRIGHTNESS_MASTER 255
 
 CRGB leds[NUM_LEDS];
 

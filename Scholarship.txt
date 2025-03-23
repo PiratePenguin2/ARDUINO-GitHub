@@ -1,0 +1,27 @@
+Hi there! My name is Luke Buss, and I am studying to be an Electrical & Computer Engineering (ECE) major at Cal Baptist.
+Every since I was very young, I've had the strangly clear dream to work in the theme park industry someday.
+I've grown up around the theme parks in Southern California all my life, and ever since I can remember I've been fascinated with them on a level much deeper than the average guest.
+I could often decern exactly how a complex ride works; how much capacity it has, how many trains it runs, how a mind boggling special effect is done; even back in elementry school.
+In my free time as a kid, I would enjoy building a variety of roller coasters and theme park attractions out of simple toys, and these projects grew more and more complex as I approached high school and college.
+It wasn't till a few years ago though that I honed in on exactly what division interested me: ride and show programming.
+It wasn't as much about the layout of a coaster or the artistic design of a dark ride, but rather the idea that thousands can experience an attraction every day, but the story remains personal to every guest.
+Theme park attractions are a perfect harmony of precision engineering and immersive storytelling—machines built for efficiency, yet designed to create unique, personal adventures for every guest.
+This revelation is what inspired me to study engineering and robotics, to one day have the opportunity to design and program the cutting edge technology that drives themed entertainment.
+
+
+My first engineering course was back in middle school, with an industrial tech and STEM program.
+Continuing on to high school, we learned the 3d CAD program SolidWorks, which enabled me to obtain my Certified SolidWorks Associate (CSWA) and Professional (CSWP) certifications.
+High school was also my first experience with robotics through the VEX Robotics club on campus.
+I became president of the club in my senior year, and we developed some very unique robots to compete against other schools in the district.
+Because of such a cool experience with robotics in high school, I sought to join the robotics team right away when I got to CBU.
+On the very first day of school, I was encouraged to join by Titus Rehard, the president of the team and one of the coolest people I've ever met.
+Throughout the year, I have found my place working on the programming team with the robot's control system and hardware integration.
+I did extensive research and testing into what the motors can handle before burnout, including writing PID controllers for voltage regulation and motor syncing across the drivetrain motors.
+I also wrote a simple user interface using the onboard LCD screen for select operating modes, and have co-implement the control theory and macros behind the driver control.
+As we prepare for worlds, I will also be programming a lighting package, and helping to rewrite the control theory behind our autonomous tracking and path splining systems.
+I have learned an enormous amount through the robotics team, and I am incredibly thankful that I found such an amazing group of people right away when coming to CBU!
+
+Just recently, I recieved an invite for an incredible opportunity from the engineering Dean, Dr. van Haaster. As a summer internship, he has invited me to help 
+
+
+

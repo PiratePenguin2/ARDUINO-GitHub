@@ -8,7 +8,7 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 void setup() {
     strip.begin();
     strip.show(); // Initialize all pixels to 'off'
-    strip.setBrightness(85);
+    strip.setBrightness(100);
 }
 
 void loop() {
@@ -17,6 +17,7 @@ void loop() {
     setAllColor(0,0,255,1000);
     //setAllColor(255,7,0,10);
     //setAllColor(255,255,255,1000);
+    delay(10);
 }
 
 void setAllColor(uint8_t r, uint8_t g, uint8_t b, int wait) {
@@ -24,7 +25,6 @@ void setAllColor(uint8_t r, uint8_t g, uint8_t b, int wait) {
     strip.setPixelColor(i, strip.Color(r, g, b));
   }
   strip.show(); // Update LED strip
-  delay(wait);
 }
 
 void rainbowCycle(int wait) {
