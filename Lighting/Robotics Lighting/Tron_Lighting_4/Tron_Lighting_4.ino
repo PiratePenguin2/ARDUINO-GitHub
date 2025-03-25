@@ -2,7 +2,7 @@
 
 #define LED_PIN     2    // Pin connected to the LED strip
 #define NUM_LEDS    160  // Adjust to your LED count
-#define BRIGHTNESS  25   // Adjust brightness (0-255)
+#define BRIGHTNESS  50   // Adjust brightness (0-255)
 #define FPS         30   // Global FPS setting
 #define PULSE_INTERVAL 3000 // Interval to start a new pulse (in milliseconds)
 
@@ -71,7 +71,7 @@ private:
 };
 
 // Create a pulse effect with start at 10, end at 20, start length 5, end length 10
-PulseEffect pulse1(5, 7, CRGB(30, 30, 255), CRGB(255, 8, 0), 3000, 3, 3);
+PulseEffect pulse1(97, 159, CRGB(30, 30, 255), CRGB(255, 8, 0), 3000, 5, 5);
 unsigned long lastPulseTime = 0;
 
 void setup() {
