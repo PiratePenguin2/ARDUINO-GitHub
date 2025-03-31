@@ -1,7 +1,7 @@
 #include <FastLED.h>
 
 #define LED_PIN        2     // Data pin for LED strip
-#define NUM_LEDS       160   // Number of LEDs
+#define NUM_LEDS       85   // Number of LEDs
 #define WAVE_SPEED     3    // Speed of the moving wave
 
 #define LIT_WAVE_SIZE  20    // Width of the bright wave
@@ -10,7 +10,8 @@
 #define LIT_BRIGHTNESS 255   // Maximum brightness of the wave
 #define DULL_BRIGHTNESS 40   // Minimum brightness of the wave
 //#define COLOR         CHSV(225, 255, 255) // Base color (Hue, Saturation, Value)
-#define COLOR         CRGB(30,30,255)
+//#define COLOR         CRGB(30,30,255)
+#define COLOR         CRGB(0,0,255)
 //#define COLOR         CRGB(255,8,0)
 #define SPEED         20    // Overall speed of effect (lower is faster)
 
@@ -28,15 +29,15 @@ void setup() {
 void loop() {
     static uint16_t waveOffset = 0;  // Tracks traveling wave position
 
-    for (int i = 97; i < NUM_LEDS; i++) {
+    for (int i = 0; i < NUM_LEDS; i++) {
         uint8_t wave = sin8((i * 255 / (LIT_WAVE_SIZE + DULL_WAVE_SIZE)) + waveOffset);  // Moving wave effect
         uint8_t brightness = map(wave, 0, 255, DULL_BRIGHTNESS, LIT_BRIGHTNESS);  // Scale brightness
-
-        leds[i] = COLOR;//CHSV(160, 255, brightness);  // Apply color with varying brightness
-        leds[i].nscale8_video(brightness);
+        
+        leds[i] = COLOR;  // Apply color
+        leds[i].nscale8(brightness);  // Apply brightness scaling
     }
 
     waveOffset += WAVE_SPEED;  // Move the wave down the strip
     FastLED.show();
-    delay(SPEED);
+    FastLED.delay(SPEED);  // Use FastLED's delay for smoother timing
 }

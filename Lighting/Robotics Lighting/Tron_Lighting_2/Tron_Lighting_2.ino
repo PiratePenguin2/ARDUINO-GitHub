@@ -3,7 +3,7 @@
 #define LED_PIN     2    // Pin connected to the LED strip
 #define START_INDEX 97
 #define NUM_LEDS    160   // Adjust to your LED count
-#define BRIGHTNESS  100  // Adjust brightness (0-255)
+#define BRIGHTNESS  255  // Adjust brightness (0-255)
 
 #define BASE_COLOR  CRGB(0, 0, 255)   // Deep blue (default state)
 //#define PULSE_COLOR CRGB(255, 8, 0)   // Aggressive red pulse effect

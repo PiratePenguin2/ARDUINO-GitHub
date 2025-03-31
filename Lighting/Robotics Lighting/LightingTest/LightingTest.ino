@@ -1,14 +1,14 @@
 #include <Adafruit_NeoPixel.h>
 
 #define LED_PIN 2      // Digital pin connected to the LED strip
-#define LED_COUNT 160   // Number of LEDs in the strip
+#define LED_COUNT 85   // Number of LEDs in the strip
 
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
     strip.begin();
     strip.show(); // Initialize all pixels to 'off'
-    strip.setBrightness(100);
+    strip.setBrightness(255);
 }
 
 void loop() {
