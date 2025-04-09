@@ -25,6 +25,7 @@ void setAllColor(uint8_t r, uint8_t g, uint8_t b, int wait) {
     strip.setPixelColor(i, strip.Color(r, g, b));
   }
   strip.show(); // Update LED strip
+  delay(wait);
 }
 
 void rainbowCycle(int wait) {
