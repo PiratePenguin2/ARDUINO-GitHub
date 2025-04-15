@@ -1,7 +1,8 @@
 #include <FastLED.h>
 
 #define LED_PIN        2     // Data pin for LED strip
-#define NUM_LEDS       85   // Number of LEDs
+#define START_LED      2
+#define NUM_LEDS       86   // Number of LEDs
 #define WAVE_SPEED     3    // Speed of the moving wave
 
 #define LIT_WAVE_SIZE  20    // Width of the bright wave
@@ -29,7 +30,7 @@ void setup() {
 void loop() {
     static uint16_t waveOffset = 0;  // Tracks traveling wave position
 
-    for (int i = 0; i < NUM_LEDS; i++) {
+    for (int i = START_LED; i < NUM_LEDS; i++) {
         uint8_t wave = sin8((i * 255 / (LIT_WAVE_SIZE + DULL_WAVE_SIZE)) + waveOffset);  // Moving wave effect
         uint8_t brightness = map(wave, 0, 255, DULL_BRIGHTNESS, LIT_BRIGHTNESS);  // Scale brightness
         
