@@ -13,15 +13,17 @@
 #define DULL_BRIGHTNESS 40
 #define COLOR          CRGB(0, 0, 255)  // Base wave color
 
-#define PULSE_LENGTH   3       // Length of the pulse in pixels
-#define PULSE_COLOR    CRGB::White
-#define PULSE_INTERVAL 3000    // Time between new pulses (ms)
+#define PULSE_LENGTH   10       // Length of the pulse in pixels
+#define PULSE_COLOR    CRGB::White //CRGB(255, 8, 0)
+#define PULSE_INTERVAL 5000    // Time between new pulses (ms)
 #define PULSE_DURATION 1000    // Time for a pulse to travel full strip (ms)
+#define PULSE_SOLID_PERCENT 0.2
 
 CRGB leds[NUM_LEDS];
 
 unsigned long lastPulseStart = 0;
 bool pulseActive = false;
+const float edgePercent = (1.0 - PULSE_SOLID_PERCENT) / 2.0;  // 30% on each edge if solid is 40%
 
 void setup() {
     FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, NUM_LEDS);
@@ -49,7 +51,6 @@ void loop() {
     }
 
     // Draw the white pulse based on time
-    // Draw the white pulse based on time
     if (pulseActive) {
         float elapsed = now - lastPulseStart;
         if (elapsed >= PULSE_DURATION) {
@@ -57,7 +58,6 @@ void loop() {
         } else {
             float progress = elapsed / (float)PULSE_DURATION;
 
-            // Extend travel range so the full pulse clears the ends
             float pathStart = START_LED - PULSE_LENGTH / 2.0;
             float pathEnd = NUM_LEDS - 1 + PULSE_LENGTH / 2.0;
             float pulseCenterF = pathStart + progress * (pathEnd - pathStart);
@@ -66,14 +66,36 @@ void loop() {
             for (int i = -PULSE_LENGTH / 2; i <= PULSE_LENGTH / 2; i++) {
                 int ledIndex = pulseCenter + i;
                 if (ledIndex >= START_LED && ledIndex < NUM_LEDS) {
-                    leds[ledIndex] = PULSE_COLOR;  // Overlay white pulse
+                    CRGB baseColor = leds[ledIndex];
+
+                    // Compute position in pulse: 0.0 (start) to 1.0 (end)
+                    int relativeIndex = i + PULSE_LENGTH / 2;
+                    float pct = relativeIndex / float(PULSE_LENGTH);
+                    uint8_t blendAmount;
+
+                    if (pct < edgePercent) {
+                        // Fade-in zone
+                        float fadePct = pct / edgePercent;
+                        blendAmount = fadePct * 255;
+                    } else if (pct < (1.0 - edgePercent)) {
+                        // Solid zone
+                        blendAmount = 255;
+                    } else {
+                        // Fade-out zone
+                        float fadePct = (pct - (1.0 - edgePercent)) / edgePercent;
+                        blendAmount = (1.0 - fadePct) * 255;
+                    }
+
+                    leds[ledIndex] = blend(baseColor, PULSE_COLOR, blendAmount);
                 }
             }
         }
     }
 
 
-    waveOffset += WAVE_SPEED;
-    FastLED.show();
-    FastLED.delay(SPEED);
+
+
+  waveOffset += WAVE_SPEED;
+  FastLED.show();
+  FastLED.delay(SPEED);
 }
