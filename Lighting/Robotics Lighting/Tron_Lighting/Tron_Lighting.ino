@@ -24,6 +24,7 @@ CRGB leds[NUM_LEDS];
 unsigned long lastPulseStart = 0;
 bool pulseActive = false;
 const float edgePercent = (1.0 - PULSE_SOLID_PERCENT) / 2.0;  // 30% on each edge if solid is 40%
+bool pulseDirectionForward = false;
 
 void setup() {
     FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, NUM_LEDS);
@@ -60,7 +61,9 @@ void loop() {
 
             float pathStart = START_LED - PULSE_LENGTH / 2.0;
             float pathEnd = NUM_LEDS - 1 + PULSE_LENGTH / 2.0;
-            float pulseCenterF = pathStart + progress * (pathEnd - pathStart);
+            float pulseCenterF = pulseDirectionForward
+    ? pathStart + progress * (pathEnd - pathStart)
+    : pathEnd - progress * (pathEnd - pathStart);
             int pulseCenter = round(pulseCenterF);
 
             for (int i = -PULSE_LENGTH / 2; i <= PULSE_LENGTH / 2; i++) {
