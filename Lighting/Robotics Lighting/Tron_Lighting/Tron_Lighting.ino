@@ -1,8 +1,8 @@
 #include <FastLED.h>
 
 #define LED_PIN        2     // Data pin for LED strip
-#define START_LED      2
-#define NUM_LEDS       86    // Number of LEDs
+#define START_LED      2//113
+#define NUM_LEDS       86//61    // Number of LEDs
 #define WAVE_SPEED     3     // Speed of the moving wave
 #define SPEED          20    // Overall wave update speed (lower = faster)
 #define BRIGHTNESS_MASTER 255
