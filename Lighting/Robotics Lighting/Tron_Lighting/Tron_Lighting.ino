@@ -33,72 +33,69 @@ void setup() {
     FastLED.setBrightness(BRIGHTNESS_MASTER);
 }
 
-void loop() {
-    static uint16_t waveOffset = 0;
-    unsigned long now = millis();
-
-    // Trigger a new pulse if enough time has passed
-    if (!pulseActive && (now - lastPulseStart >= PULSE_INTERVAL)) {
-        lastPulseStart = now;
-        pulseActive = true;
-    }
-
-    // Draw base wave effect
+void drawWaveEffect(uint16_t waveOffset) {
     for (int i = START_LED; i < NUM_LEDS; i++) {
         uint8_t wave = sin8((i * 255 / (LIT_WAVE_SIZE + DULL_WAVE_SIZE)) + waveOffset);
         uint8_t brightness = map(wave, 0, 255, DULL_BRIGHTNESS, LIT_BRIGHTNESS);
         leds[i] = COLOR;
         leds[i].nscale8(brightness);
     }
+}
 
-    // Draw the white pulse based on time
-    if (pulseActive) {
-        float elapsed = now - lastPulseStart;
-        if (elapsed >= PULSE_DURATION) {
-            pulseActive = false;
-        } else {
-            float progress = elapsed / (float)PULSE_DURATION;
-
-            float pathStart = START_LED - PULSE_LENGTH / 2.0;
-            float pathEnd = NUM_LEDS - 1 + PULSE_LENGTH / 2.0;
-            float pulseCenterF = pulseDirectionForward
-    ? pathStart + progress * (pathEnd - pathStart)
-    : pathEnd - progress * (pathEnd - pathStart);
-            int pulseCenter = round(pulseCenterF);
-
-            for (int i = -PULSE_LENGTH / 2; i <= PULSE_LENGTH / 2; i++) {
-                int ledIndex = pulseCenter + i;
-                if (ledIndex >= START_LED && ledIndex < NUM_LEDS) {
-                    CRGB baseColor = leds[ledIndex];
-
-                    // Compute position in pulse: 0.0 (start) to 1.0 (end)
-                    int relativeIndex = i + PULSE_LENGTH / 2;
-                    float pct = relativeIndex / float(PULSE_LENGTH);
-                    uint8_t blendAmount;
-
-                    if (pct < edgePercent) {
-                        // Fade-in zone
-                        float fadePct = pct / edgePercent;
-                        blendAmount = fadePct * 255;
-                    } else if (pct < (1.0 - edgePercent)) {
-                        // Solid zone
-                        blendAmount = 255;
-                    } else {
-                        // Fade-out zone
-                        float fadePct = (pct - (1.0 - edgePercent)) / edgePercent;
-                        blendAmount = (1.0 - fadePct) * 255;
-                    }
-
-                    leds[ledIndex] = blend(baseColor, PULSE_COLOR, blendAmount);
-                }
-            }
-        }
+void drawPulseEffect() {
+    float elapsed = millis() - lastPulseStart;
+    if (elapsed >= PULSE_DURATION) {
+        pulseActive = false;
+        return;
     }
 
+    float progress = elapsed / (float)PULSE_DURATION;
+    float pathStart = START_LED - PULSE_LENGTH / 2.0;
+    float pathEnd = NUM_LEDS - 1 + PULSE_LENGTH / 2.0;
+    float pulseCenterF = pulseDirectionForward
+        ? pathStart + progress * (pathEnd - pathStart)
+        : pathEnd - progress * (pathEnd - pathStart);
+    int pulseCenter = round(pulseCenterF);
 
+    for (int i = -PULSE_LENGTH / 2; i <= PULSE_LENGTH / 2; i++) {
+        int ledIndex = pulseCenter + i;
+        if (ledIndex >= START_LED && ledIndex < NUM_LEDS) {
+            CRGB baseColor = leds[ledIndex];
+            int relativeIndex = i + PULSE_LENGTH / 2;
+            float pct = relativeIndex / float(PULSE_LENGTH);
+            uint8_t blendAmount;
 
+            if (pct < edgePercent) {
+                float fadePct = pct / edgePercent;
+                blendAmount = fadePct * 255;
+            } else if (pct < (1.0 - edgePercent)) {
+                blendAmount = 255;
+            } else {
+                float fadePct = (pct - (1.0 - edgePercent)) / edgePercent;
+                blendAmount = (1.0 - fadePct) * 255;
+            }
 
-  waveOffset += WAVE_SPEED;
-  FastLED.show();
-  FastLED.delay(SPEED);
+            leds[ledIndex] = blend(baseColor, PULSE_COLOR, blendAmount);
+        }
+    }
+}
+
+void loop() {
+    static uint16_t waveOffset = 0;
+    unsigned long now = millis();
+
+    if (!pulseActive && (now - lastPulseStart >= PULSE_INTERVAL)) {
+        lastPulseStart = now;
+        pulseActive = true;
+    }
+
+    drawWaveEffect(waveOffset);
+
+    if (pulseActive) {
+        drawPulseEffect();
+    }
+
+    waveOffset += WAVE_SPEED;
+    FastLED.show();
+    FastLED.delay(SPEED);
 }
