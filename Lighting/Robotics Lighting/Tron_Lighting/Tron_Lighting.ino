@@ -1,6 +1,6 @@
 #include <FastLED.h>
 
-#define LED_PIN        2     // Data pin for LED strip
+#define LED_PIN        7     // Data pin for LED strip
 #define START_LED      2//113
 #define NUM_LEDS       86//61    // Number of LEDs
 #define WAVE_SPEED     3     // Speed of the moving wave
